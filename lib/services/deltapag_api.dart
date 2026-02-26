@@ -10,9 +10,10 @@ import '../models/dashboard_stats.dart';
 import '../models/webhook.dart';
 
 class DeltaPagAPI {
-  // ✅ API DeltaPag/BemPaggo DIRETO (sem proxy)
-  // PRODUÇÃO: Chamar API HTTPS diretamente (CORS habilitado pelo backend)
-  static const String baseUrl = 'https://api-bempaggo.cloud.primepag.com.br/api/v2';
+  // ✅ API DeltaPag PRODUÇÃO OFICIAL
+  // URL: https://api.deltapag.io/api/v2
+  // Painel: https://painel.deltapag.io
+  static const String baseUrl = 'https://api.deltapag.io/api/v2';
   static const String token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI3ODYiLCJ0ZW5hbnQiOiJiZW1wYWdnb19rYWlub3dwcm9tb2Nhb2RldmVuXzJfMjc5MjM3NDYwMDAxMjMiLCJpYXQiOjE3NzIwOTY5NDIsImV4cCI6NDEwMjM1ODM5OSwiaXNNYXN0ZXIiOnRydWV9.gjqYDIeIQPln2SMzxVCsFhSKLNrkSmmZ-TX3EypJOsF_t_Iofy_kLVFOAgqD8LKVzgSMidVFOZX_l2ILaRKhPw';
 
   Map<String, String> get _headers => {
