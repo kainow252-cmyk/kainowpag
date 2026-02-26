@@ -535,10 +535,10 @@ class _ProductsScreenV2State extends State<ProductsScreenV2> {
                   'Clique para copiar',
                   Icons.link,
                   isLink: true,
-                  linkValue: 'https://5060-irjnby5ff1796hp64gl7e-d0b9e1e2.sandbox.novita.ai/checkout/${product.id}',
+                  linkValue: '${Uri.base.origin}/checkout/${product.id}',
                   onLinkTap: () {
                     // Copiar para área de transferência
-                    final checkoutUrl = 'https://5060-irjnby5ff1796hp64gl7e-d0b9e1e2.sandbox.novita.ai/checkout/${product.id}';
+                    final checkoutUrl = '${Uri.base.origin}/checkout/${product.id}';
                     Clipboard.setData(ClipboardData(text: checkoutUrl));
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(

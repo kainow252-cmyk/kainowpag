@@ -93,14 +93,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   String _getCheckoutUrl() {
-    // Pega a URL base do navegador
-    const baseUrl = 'https://5060-irjnby5ff1796hp64gl7e-d0b9e1e2.sandbox.novita.ai';
+    // Pega a URL base do navegador (funciona em qualquer domínio)
+    final baseUrl = Uri.base.origin;
     return '$baseUrl/checkout/${widget.productId}';
   }
 
   String _getAPIUrl() {
-    const baseUrl = 'https://5060-irjnby5ff1796hp64gl7e-d0b9e1e2.sandbox.novita.ai';
-    return '$baseUrl/api/generate-checkout-link/${widget.productId}';
+    // URL relativa - funciona em localhost e produção
+    return '/api/generate-checkout-link/${widget.productId}';
   }
 
   Future<void> _copyCheckoutLink() async {
@@ -812,8 +812,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         ),
       );
 
-      // Chamar API
-      final apiUrl = 'https://5060-irjnby5ff1796hp64gl7e-d0b9e1e2.sandbox.novita.ai/api/generate-checkout-link/${widget.productId}';
+      // Chamar API (URL relativa - funciona em qualquer domínio)
+      final apiUrl = '/api/generate-checkout-link/${widget.productId}';
       
       final response = await http.get(Uri.parse(apiUrl));
       
