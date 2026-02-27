@@ -17,6 +17,17 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     
+    // Handler para OPTIONS (CORS preflight)
+    if (request.method === 'OPTIONS') {
+      return handleOptions(request);
+    }
+    
+    // Handler para /api/generate-checkout-link/:id
+    const checkoutLinkMatch = url.pathname.match(/^\/api\/generate-checkout-link\/(\d+)$/);
+    if (checkoutLinkMatch) {
+      return handleGenerateCheckoutLink(request, url, checkoutLinkMatch[1]);
+    }
+    
     // Se a URL começa com /api/v2, redirecionar para API DeltaPag
     if (url.pathname.startsWith('/api/v2')) {
       return handleAPIRequest(request, url);
@@ -75,6 +86,32 @@ async function handleOptions(request) {
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Authorization, Accept',
       'Access-Control-Max-Age': '86400',
+    },
+  });
+}
+
+// Handler para /api/generate-checkout-link/:id
+async function handleGenerateCheckoutLink(request, url, productId) {
+  // Obter o domínio da requisição atual (ex: www.kainowpag.com ou 67e84e37.kainowpag.pages.dev)
+  const origin = url.origin; // https://www.kainowpag.com ou https://67e84e37.kainowpag.pages.dev
+  
+  // Gerar URL completa do checkout
+  const checkoutUrl = `${origin}/checkout/${productId}`;
+  
+  const responseData = {
+    success: true,
+    checkoutUrl: checkoutUrl,
+    productId: productId,
+    message: 'Link de checkout gerado com sucesso!',
+  };
+  
+  return new Response(JSON.stringify(responseData), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization, Accept',
     },
   });
 }
