@@ -131,8 +131,13 @@ class APIProvider with ChangeNotifier {
       final cached = await _storage.getProductById(id);
       if (cached != null) return cached;
       
-      // API DeltaPag não tem endpoint GET individual para produtos
-      return null;
+      // Buscar produto na API DeltaPag
+      final product = await _realAPI.getProduct(id);
+      if (product != null) {
+        // Salvar no cache para próxima vez
+        await _storage.saveProduct(product);
+      }
+      return product;
     }
   }
 
